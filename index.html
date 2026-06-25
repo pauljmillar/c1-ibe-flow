@@ -45,21 +45,15 @@
       </div>
     </div>
 
-    <div class="hero-pills">
-      <span class="pill"><b>Spec-driven</b> · BRD before code</span>
-      <span class="pill"><b>TDD enforced</b> · tests before code</span>
-      <span class="pill"><b>Independent review</b> · different LLM</span>
-      <span class="pill"><b>Human-in-the-loop</b> · evidence-based sign-off</span>
+    <div class="pipeline-preview" aria-label="Pipeline stages">
+      <div class="pipeline-preview-label">10-stage agentic pipeline</div>
+      <div class="progress-track" id="progressTrack"></div>
     </div>
   </div>
 </section>
 
 <!-- PIPELINE: below the fold, revealed after launch -->
 <section class="pipeline-section" id="pipeline" hidden>
-  <div class="progress-strip">
-    <div class="progress-track" id="progressTrack"></div>
-  </div>
-
   <div class="layout">
     <section class="stages">
       <article class="intent-parsed-card" id="intentParsedCard" hidden>
@@ -97,10 +91,30 @@
   <div class="about-inner">
     <h2>Why this prototype</h2>
     <p>Capital One published <a href="https://www.capitalone.com/tech/" target="_blank" rel="noopener">Intent-Based Engineering</a> on its tech blog — "TurboTax for developers": specify the desired outcome, skip the setup. This prototype extends IBE into the agentic workflow: AI generates the spec, writes tests first, codes to them, a <em>different</em> model reviews to catch drift, and the engineer signs off on evidence — not vibes.</p>
-    <div class="about-grid">
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-icon">📋</div>
+        <b>Spec-driven</b>
+        <p>BRD generated before any code is written. The spec is the contract — every downstream artifact traces back to it.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🧪</div>
+        <b>TDD enforced</b>
+        <p>Tests are written before code, not after. The coder agent has a target to hit and the pipeline can't lie about coverage.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🔍</div>
+        <b>Independent review</b>
+        <p>A different LLM reviews the diff. Same model that wrote the code has the same blind spots — an independent model catches spec drift and hallucination.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">✋</div>
+        <b>Human-in-the-loop</b>
+        <p>The engineer is the fail-safe, not the bottleneck. Sign-off comes with evidence: tests, QA p99, spec-alignment score, security gate.</p>
+      </div>
+    </div>
+    <div class="signal-grid">
       <div><b>Player-Coach signal.</b> Shipped in hours, not weeks.</div>
-      <div><b>Independent review.</b> Different LLM catches what the coder can't self-detect.</div>
-      <div><b>Fail-safe, not bottleneck.</b> Human gate gets test results, QA, and spec-alignment scores.</div>
       <div><b>Full DevOps loop.</b> CI, agentic QA, canary deploy, armed rollback.</div>
     </div>
   </div>
