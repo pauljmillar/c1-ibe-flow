@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IBE Flow — Capital One Card Tech AI</title>
+<meta name="description" content="Intent-Based Engineering: agentic dev pipeline prototype for Capital One Card Tech AI." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 56 36" width="56" height="36" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="26" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#D03027">Capital</text>
+      </svg>
+      <span class="logo-one">One<sup>®</sup></span>
+    </div>
+    <div class="divider"></div>
+    <div class="brand-title">
+      <div class="brand-name">IBE Flow</div>
+      <div class="brand-sub">Sr Director Demo · Card Tech AI</div>
+    </div>
+  </div>
+  <button class="btn-reset" id="btnReset" type="button">Start Over</button>
+</header>
+
+<section class="progress-strip" aria-label="Pipeline progress">
+  <div class="progress-track" id="progressTrack"></div>
+</section>
+
+<main class="layout">
+  <section class="stages" id="stages">
+    <article class="intent-card">
+      <span class="stage-label">Intent</span>
+      <h1 class="intent-title">From intent to production — without the operational noise.</h1>
+      <p class="intent-blurb">Describe the feature in natural language. The agentic pipeline turns it into spec, tests, code, review, security, QA, and a canary deploy — with a human gate before production.</p>
+      <label for="intentInput" class="sr-only">Intent</label>
+      <textarea id="intentInput" rows="3" spellcheck="false">Add real-time velocity fraud scoring to Venture X card authorizations using ML inference on transaction sequences.</textarea>
+      <div class="intent-actions">
+        <button class="btn-primary" id="btnLaunch" type="button">Launch IBE →</button>
+        <span class="intent-hint">Inspired by Capital One's <a href="https://www.capitalone.com/tech/" target="_blank" rel="noopener">Intent-Based Engineering</a> framework.</span>
+      </div>
+      <div class="intent-parsed" id="intentParsed" hidden>
+        <div class="parsed-row"><span>Domain</span><b>Card Tech AI</b></div>
+        <div class="parsed-row"><span>Feature</span><b>Real-time velocity fraud scoring</b></div>
+        <div class="parsed-row"><span>Constraint</span><b>Must integrate with existing auth pipeline</b></div>
+        <div class="parsed-row"><span>Target Service</span><b>venture-x-auth-service</b></div>
+      </div>
+    </article>
+
+    <div id="stageList"></div>
+  </section>
+
+  <aside class="sidebar">
+    <div class="stats-card">
+      <div class="stats-title">Live Metrics</div>
+      <div class="stat"><label>Tests</label><span id="statTests">0 ✓ / 0 ✗</span></div>
+      <div class="stat"><label>Coverage</label><span id="statCov">—</span></div>
+      <div class="stat"><label>Security</label><span id="statSec">—</span></div>
+      <div class="stat"><label>Spec alignment</label><span id="statSpec">—</span></div>
+      <div class="stat"><label>Elapsed</label><span id="statTime">00:00</span></div>
+    </div>
+    <div class="log-card">
+      <div class="log-title">Pipeline Log</div>
+      <div class="log-stream" id="logStream" aria-live="polite"></div>
+    </div>
+  </aside>
+</main>
+
+<footer class="footer">
+  <span>Built to demonstrate IBE in action — Intent → Execution.</span>
+  <span class="footer-meta">Prepared for Capital One · Card Tech AI · Sr Director Software Engineering</span>
+</footer>
+
+<dialog id="diffDialog" class="diff-dialog">
+  <div class="diff-head">
+    <div>
+      <div class="diff-title">Merge Request · feat/velocity-fraud-scoring</div>
+      <div class="diff-sub">venture-x-auth-service · 6 files changed · +218 / −12</div>
+    </div>
+    <button class="btn-ghost" id="btnCloseDiff" type="button">Close</button>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-evidence">
+      <div class="ev-row"><span>Spec alignment</span><b class="ok">98%</b></div>
+      <div class="ev-row"><span>Tests</span><b class="ok">28 / 28 passing</b></div>
+      <div class="ev-row"><span>Coverage</span><b class="ok">94%</b></div>
+      <div class="ev-row"><span>Security</span><b class="ok">0 critical</b></div>
+      <div class="ev-row"><span>QA p99</span><b class="ok">38ms @ 2,400 rps</b></div>
+      <div class="ev-row warn"><span>Review note</span><b>Add retry logic on ML inference timeout</b></div>
+    </div>
+    <pre class="diff-pre"><code><span class="d-meta">--- a/auth/velocity.py</span>
+<span class="d-meta">+++ b/auth/velocity.py</span>
+<span class="d-add">+ from c1.ml import VelocityScorer</span>
+<span class="d-add">+ from c1.metrics import auth_latency</span>
+<span class="d-add">+</span>
+<span class="d-add">+ scorer = VelocityScorer(model="venture-x-v3")</span>
+<span class="d-add">+</span>
+<span class="d-add">+ def score_authorization(txn, window):</span>
+<span class="d-add">+     features = build_features(txn, window)</span>
+<span class="d-add">+     with auth_latency.time():</span>
+<span class="d-add">+         risk = scorer.infer(features, timeout_ms=25)</span>
+<span class="d-add">+     return risk.score, risk.reasons</span>
+<span class="d-meta">--- a/auth/pipeline.py</span>
+<span class="d-meta">+++ b/auth/pipeline.py</span>
+<span class="d-rem">- approve = legacy_rules(txn)</span>
+<span class="d-add">+ score, reasons = score_authorization(txn, window=velocity_window(txn))</span>
+<span class="d-add">+ approve = decide(score, legacy_rules(txn))</span>
+</code></pre>
+  </div>
+</dialog>
+
+<script src="pipeline.js"></script>
+</body>
+</html>
