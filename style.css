@@ -74,7 +74,7 @@ a{color:var(--c1-regal-blue)}
     radial-gradient(1100px 500px at 80% -10%, rgba(0,73,119,.08), transparent 60%),
     radial-gradient(900px 400px at 0% 10%, rgba(208,48,39,.05), transparent 55%),
     linear-gradient(180deg,#FBFCFD 0%,#F4F5F7 100%);
-  padding:72px 32px 88px;
+  padding:44px 32px 56px;
   border-bottom:1px solid var(--c1-border);
 }
 .hero-inner{max-width:920px;margin:0 auto;text-align:center}
