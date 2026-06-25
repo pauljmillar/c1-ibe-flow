@@ -13,67 +13,102 @@
 <body>
 <header class="topbar">
   <div class="brand">
-    <div class="logo" aria-hidden="true">
-      <svg viewBox="0 0 56 36" width="56" height="36" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="26" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#D03027">Capital</text>
-      </svg>
-      <span class="logo-one">One<sup>®</sup></span>
-    </div>
+    <a class="logo" href="https://www.capitalone.com/" target="_blank" rel="noopener" aria-label="Capital One">
+      <img src="capital-one-logo.svg" alt="Capital One" height="28" />
+    </a>
     <div class="divider"></div>
     <div class="brand-title">
       <div class="brand-name">IBE Flow</div>
-      <div class="brand-sub">Sr Director Demo · Card Tech AI</div>
+      <div class="brand-sub">Card Tech AI · Sr Director Demo</div>
     </div>
   </div>
-  <button class="btn-reset" id="btnReset" type="button">Start Over</button>
+  <nav class="topnav">
+    <a href="#pipeline">Pipeline</a>
+    <a href="#about">About IBE</a>
+    <button class="btn-reset" id="btnReset" type="button" hidden>Start Over</button>
+  </nav>
 </header>
 
-<section class="progress-strip" aria-label="Pipeline progress">
-  <div class="progress-track" id="progressTrack"></div>
+<!-- HERO: above the fold -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Intent-Based Engineering · Prototype</span>
+    <h1 class="hero-title">From intent to production —<br/>without the operational noise.</h1>
+    <p class="hero-sub">An agentic dev pipeline that turns a one-line feature request into spec, tests, code, independent review, security, QA, and a canary deploy — with a human gate before production.</p>
+
+    <div class="hero-card">
+      <label for="intentInput" class="hero-label">Feature intent</label>
+      <textarea id="intentInput" rows="2" spellcheck="false">Add real-time velocity fraud scoring to Venture X card authorizations using ML inference on transaction sequences.</textarea>
+      <div class="hero-actions">
+        <button class="btn-primary" id="btnLaunch" type="button">Launch IBE Pipeline →</button>
+        <span class="hero-hint">10 stages · ~4 min simulated · 1 human gate</span>
+      </div>
+    </div>
+
+    <div class="hero-pills">
+      <span class="pill"><b>Spec-driven</b> · BRD before code</span>
+      <span class="pill"><b>TDD enforced</b> · tests before code</span>
+      <span class="pill"><b>Independent review</b> · different LLM</span>
+      <span class="pill"><b>Human-in-the-loop</b> · evidence-based sign-off</span>
+    </div>
+  </div>
 </section>
 
-<main class="layout">
-  <section class="stages" id="stages">
-    <article class="intent-card">
-      <span class="stage-label">Intent</span>
-      <h1 class="intent-title">From intent to production — without the operational noise.</h1>
-      <p class="intent-blurb">Describe the feature in natural language. The agentic pipeline turns it into spec, tests, code, review, security, QA, and a canary deploy — with a human gate before production.</p>
-      <label for="intentInput" class="sr-only">Intent</label>
-      <textarea id="intentInput" rows="3" spellcheck="false">Add real-time velocity fraud scoring to Venture X card authorizations using ML inference on transaction sequences.</textarea>
-      <div class="intent-actions">
-        <button class="btn-primary" id="btnLaunch" type="button">Launch IBE →</button>
-        <span class="intent-hint">Inspired by Capital One's <a href="https://www.capitalone.com/tech/" target="_blank" rel="noopener">Intent-Based Engineering</a> framework.</span>
-      </div>
-      <div class="intent-parsed" id="intentParsed" hidden>
-        <div class="parsed-row"><span>Domain</span><b>Card Tech AI</b></div>
-        <div class="parsed-row"><span>Feature</span><b>Real-time velocity fraud scoring</b></div>
-        <div class="parsed-row"><span>Constraint</span><b>Must integrate with existing auth pipeline</b></div>
-        <div class="parsed-row"><span>Target Service</span><b>venture-x-auth-service</b></div>
-      </div>
-    </article>
+<!-- PIPELINE: below the fold, revealed after launch -->
+<section class="pipeline-section" id="pipeline" hidden>
+  <div class="progress-strip">
+    <div class="progress-track" id="progressTrack"></div>
+  </div>
 
-    <div id="stageList"></div>
-  </section>
+  <div class="layout">
+    <section class="stages">
+      <article class="intent-parsed-card" id="intentParsedCard" hidden>
+        <span class="stage-label">Parsed Intent</span>
+        <div class="parsed-grid">
+          <div class="parsed-row"><span>Domain</span><b>Card Tech AI</b></div>
+          <div class="parsed-row"><span>Feature</span><b>Real-time velocity fraud scoring</b></div>
+          <div class="parsed-row"><span>Constraint</span><b>Integrate with existing auth pipeline</b></div>
+          <div class="parsed-row"><span>Target Service</span><b>venture-x-auth-service</b></div>
+        </div>
+      </article>
 
-  <aside class="sidebar">
-    <div class="stats-card">
-      <div class="stats-title">Live Metrics</div>
-      <div class="stat"><label>Tests</label><span id="statTests">0 ✓ / 0 ✗</span></div>
-      <div class="stat"><label>Coverage</label><span id="statCov">—</span></div>
-      <div class="stat"><label>Security</label><span id="statSec">—</span></div>
-      <div class="stat"><label>Spec alignment</label><span id="statSpec">—</span></div>
-      <div class="stat"><label>Elapsed</label><span id="statTime">00:00</span></div>
+      <div id="stageList"></div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="stats-card">
+        <div class="stats-title">Live Metrics</div>
+        <div class="stat"><label>Tests</label><span id="statTests">0 ✓ / 0 ✗</span></div>
+        <div class="stat"><label>Coverage</label><span id="statCov">—</span></div>
+        <div class="stat"><label>Security</label><span id="statSec">—</span></div>
+        <div class="stat"><label>Spec alignment</label><span id="statSpec">—</span></div>
+        <div class="stat"><label>Elapsed</label><span id="statTime">00:00</span></div>
+      </div>
+      <div class="log-card">
+        <div class="log-title">Pipeline Log</div>
+        <div class="log-stream" id="logStream" aria-live="polite"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <h2>Why this prototype</h2>
+    <p>Capital One published <a href="https://www.capitalone.com/tech/" target="_blank" rel="noopener">Intent-Based Engineering</a> on its tech blog — "TurboTax for developers": specify the desired outcome, skip the setup. This prototype extends IBE into the agentic workflow: AI generates the spec, writes tests first, codes to them, a <em>different</em> model reviews to catch drift, and the engineer signs off on evidence — not vibes.</p>
+    <div class="about-grid">
+      <div><b>Player-Coach signal.</b> Shipped in hours, not weeks.</div>
+      <div><b>Independent review.</b> Different LLM catches what the coder can't self-detect.</div>
+      <div><b>Fail-safe, not bottleneck.</b> Human gate gets test results, QA, and spec-alignment scores.</div>
+      <div><b>Full DevOps loop.</b> CI, agentic QA, canary deploy, armed rollback.</div>
     </div>
-    <div class="log-card">
-      <div class="log-title">Pipeline Log</div>
-      <div class="log-stream" id="logStream" aria-live="polite"></div>
-    </div>
-  </aside>
-</main>
+  </div>
+</section>
 
 <footer class="footer">
-  <span>Built to demonstrate IBE in action — Intent → Execution.</span>
-  <span class="footer-meta">Prepared for Capital One · Card Tech AI · Sr Director Software Engineering</span>
+  <span>Prepared for Capital One · Card Tech AI · Sr Director Software Engineering</span>
+  <span class="footer-meta"><a href="https://github.com/pauljmillar/c1-ibe-flow" target="_blank" rel="noopener">Source on GitHub →</a></span>
 </footer>
 
 <dialog id="diffDialog" class="diff-dialog">

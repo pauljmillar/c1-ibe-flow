@@ -307,11 +307,17 @@ function runStage(i) {
 
 function launch() {
   reset(false);
-  $('intentParsed').hidden = false;
+  $('pipeline').hidden = false;
+  $('intentParsedCard').hidden = false;
+  $('btnReset').hidden = false;
   $('btnLaunch').disabled = true;
   $('btnLaunch').textContent = 'Pipeline running…';
   pushGlobalLog({ t: 'info', text: 'IBE pipeline initiated' }, 'IBE');
   startElapsed();
+  // Smooth scroll into the pipeline section
+  setTimeout(() => {
+    document.getElementById('pipeline').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
   runStage(0);
 }
 
@@ -325,9 +331,9 @@ function reset(clearIntent = true) {
   bumpStat('statSpec', '—');
   bumpStat('statTime', '00:00');
   $('logStream').innerHTML = '';
-  $('intentParsed').hidden = true;
+  const ipc = $('intentParsedCard'); if (ipc) ipc.hidden = true;
   $('btnLaunch').disabled = false;
-  $('btnLaunch').textContent = 'Launch IBE →';
+  $('btnLaunch').textContent = 'Launch IBE Pipeline →';
   renderProgress();
   renderStages();
   if (clearIntent) {
@@ -351,6 +357,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProgress();
   renderStages();
   $('btnLaunch').addEventListener('click', launch);
-  $('btnReset').addEventListener('click', () => reset(true));
+  $('btnReset').addEventListener('click', () => {
+    reset(true);
+    $('pipeline').hidden = true;
+    $('btnReset').hidden = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
   $('btnCloseDiff').addEventListener('click', closeDiff);
 });
